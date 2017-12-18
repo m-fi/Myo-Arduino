@@ -1,5 +1,5 @@
 /**
- * @file   CHANGETHIS.ino
+ * @file   MyoArduino_3LEDs.ino
  * @author Matt Fielder
  * @date   December 2017
  * @brief  Using Myo poses to control 3 connected LEDs.
