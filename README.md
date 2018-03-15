@@ -1,6 +1,10 @@
 # Myo-Arduino
 
-Arduino code for controlling outputs via use of a Myo Armband.
+Arduino code for controlling outputs via use of a Myo Armband. Sketches and libraries can be found in [Arduino/](Arduino/)
+#### Myo-Arduino GUI
+The GUI purpose is to recieve serial communication sent from the Arduino, the parse the data to find the Myo positioning data (in quaternions). 
+The quaternions are then displayed as 3d representations in a window created using OpenGL 3.2 and AntTweakBar.
+Located in [MyoArduino_GUI/](MyoArduino_GUI/)
 
 ## Requirements
 * Arduino (Uno)
