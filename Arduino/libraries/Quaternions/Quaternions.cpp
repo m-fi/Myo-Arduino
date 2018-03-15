@@ -15,9 +15,16 @@
 
 //variables
 float w, x, y, z;
+String name;
 
 //constructor
-Quaternion::Quaternion() : x(0), y(0), z(0), w(0){} 
+Quaternion::Quaternion() : x(0), y(0), z(0), w(0), name("default"){} 
+
+//pass and store the name of the Quaternion for later use
+void Quaternion::passName(String _name)
+{
+	this->name = _name;
+}
 
 //pass data to Quaternion
 void Quaternion::passQuaternion(int16_t quat[4]) 
@@ -62,6 +69,13 @@ Quaternion Quaternion::operator=(const Quaternion& q)
 	x=q.x; 
 	y=q.y; 
 	z=q.z; 
+	
+	//only print out the named quaternions that are needed to send over Serial comms (q1,q2,qd)
+	//these will be recognised by the MyoArduino GUI (if using it)
+	if (this->name != String("default"))
+	{
+		this->printQuat();
+	}
 	return (*this); 
 }
 
@@ -82,20 +96,11 @@ Quaternion Quaternion::difference(Quaternion q1, Quaternion &q2)
 	//create objects to be used for calculations
 	Quaternion inverse, conj;
 	
-	/* Serial.println("QUAT 1////////");
-	q1.printQuat();
-	Serial.println("QUAT 2::::::::");
-	q2.printQuat(); */
-
 	//get the squared norm of q1 and store it
 	float norm_sq = q1.normSquared();
-	/* Serial.println("NORM>>>>>>");
-	Serial.println(norm_sq); */
 
 	//get conjugate of q1
 	conj = q1.conjugate();
-	/* Serial.println("CONJUGATE::::::::");
-	conj.printQuat(); */
 
 	//use the conjugate data for finding the inverse of a Quaternion
 	inverse = conj;
@@ -104,13 +109,9 @@ Quaternion Quaternion::difference(Quaternion q1, Quaternion &q2)
 	inverse.y /= norm_sq;
 	inverse.z /= norm_sq;
 	inverse.w /= norm_sq;
-	/* Serial.println("INVERSE]]]]]]]]]]]");
-	inverse.printQuat(); */
 
 	//multiply the inverse of q1 by q2 to get the Quaternion difference
 	*this = inverse * q2;
-	/* Serial.println("DIFFERENCE<<<<<<<<<<<<");
-	this-> printQuat(); */
 	//return the difference quaternion
 	return (*this);
 }  
@@ -118,13 +119,14 @@ Quaternion Quaternion::difference(Quaternion q1, Quaternion &q2)
 //print out the data from a Quaternion to the Serial connection (for debugging)
 void Quaternion::printQuat()
 {
-	Serial.print("x: ");Serial.print(x);
+	Serial.print(name);
+	Serial.print(" - x: ");Serial.print(x);
 	Serial.print(" ,y: ");Serial.print(y);
 	Serial.print(" ,z: ");Serial.print(z);
 	Serial.print(" ,w: ");Serial.println(w);
 }
 
-//returns the angle that has made the largest movement around an axis (x,y,z)
+//returns the angle that has made the largest movement around an axis (x or y)
 int Quaternion::quatAngle()
 {
 	//store the angle calculations
@@ -132,9 +134,9 @@ int Quaternion::quatAngle()
 	//angles can be between -180 and (+)180
 	xAngle = x *180;
 	yAngle = y *180;
-	zAngle = z *180;
+	//zAngle = z *180;
 
-	Serial.print("xangle:");Serial.print(xAngle);Serial.print(", yangle:");Serial.print(yAngle);Serial.print(", zangle:");Serial.println(zAngle);
+	//Serial.print("xangle:");Serial.print(xAngle);Serial.print(", yangle:");Serial.print(yAngle);Serial.print(", zangle:");Serial.println(zAngle);
 
 	//find the largest angle difference
 	//here we try to find the axis the user hoped to use
@@ -152,6 +154,25 @@ int Quaternion::quatAngle()
 
 }
 
+//return the angle of the Z co-ordinate 
+int Quaternion::quatAngleZ()
+{
+	//store the angle calculations
+	int zAngle;
+	//angles can be between -180 and (+)180
+	zAngle = z *180;
+	return zAngle;
+}
+
+//return the angle of the W co-ordinate 
+int Quaternion::quatAngleW()
+{
+	//store the angle calculations
+	int wAngle;
+	//angles can be between -180 and (+)180
+	wAngle = w *180;
+	return wAngle;
+}
 
 
 #endif //Quaternions_cpp

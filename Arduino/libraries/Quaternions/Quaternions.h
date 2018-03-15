@@ -16,10 +16,14 @@ class Quaternion
 public:
 	//variables
 	float w, x, y, z;
+	String name;
 
 	//constructor
 	Quaternion();
 	
+	//pass and store the name of the Quaternion for later use
+	void passName(String _name);
+
 	//pass data to Quaternion
 	void passQuaternion(int16_t quat[4]);
 
@@ -43,6 +47,12 @@ public:
 	
 	//returns the angle that has made the largest movement around an axis (x,y,z)
 	int quatAngle();
+	
+	//return the angle of the Z co-ordinate 
+	int quatAngleZ();
+	
+	//return the angle of the W co-ordinate 
+	int quatAngleW();
  
 };
  
