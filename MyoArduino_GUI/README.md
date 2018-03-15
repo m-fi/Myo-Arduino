@@ -2,6 +2,8 @@
 The GUI is coded with QT5.8.
 The GUI purpose is to recieve serial communication sent from the Arduino, the parse the data to find the Myo positioning data (in quaternions). 
 The quaternions are then displayed as 3d representations in a window created using OpenGL 3.2 and AntTweakBar.
+
+[debug/](debug/) contains a precompiled .exe (x86) of the program. Tested ok on Win7 x64.
 ## Layout
 <p align="center"><img src="../docs/MyoArduino_GUI.png"></p>
 
