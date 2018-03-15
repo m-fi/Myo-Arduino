@@ -9,7 +9,7 @@ The quaternions are then displayed as 3d representations in a window created usi
 
 Compiling requires:
 * [Qt 5.8+](https://www.qt.io/) (created with 5.8)
-* AntTweakBar (included in [include/](MyoArduino_GUI/include/))
+* AntTweakBar (included in [include/](include/))
 
 Required to run:
 * OpenGL 3.2 capable GFX card/drivers (released in 2009 so most modern pcs should be able to run this)
